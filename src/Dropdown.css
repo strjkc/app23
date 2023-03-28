@@ -1,0 +1,8 @@
+.dropdown_wrapper{
+    display: flex;;
+}
+
+.drp_btn_wrapper{
+    display: flex;
+    flex-direction: column;
+}
