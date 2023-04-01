@@ -99,7 +99,7 @@ function App() {
     setExpenses(newExpenses)
   } 
 
-  const monthProjection = totals.map((total, index) => <div> <h6>{months[index]}</h6> <Total total={total}/></div>)
+  const monthProjection = totals.map((total, index) => <><Total total={total} title={months[index]}/></>)
 
 
 
@@ -111,7 +111,8 @@ function App() {
       <div className={"left_pannel"}>
           <WrapperPannel item={ 
             <>
-          <EntryDatePicker dateText={"Displaying entries for: "} state={selectedMonth} setState={(e) => setSelectedMonth(e.target.value)}/> 
+            <div style={{fontSize: "25px", height: "50px", padding: "8px", color: "black"}}>Data for current month:</div>
+          <EntryDatePicker dateText={"Currently selected date: "} state={selectedMonth} setState={(e) => setSelectedMonth(e.target.value)}/> 
           <Total total={monthTotals}/>
             </>
           }
@@ -132,7 +133,7 @@ function App() {
         
         { 
         showTotals ?
-        <FolderView mainItem={<div>{monthProjection}</div>} 
+        <FolderView mainItem={<><div style={{fontSize: "25px", height: "50px", padding: "8px", color: "black"}}>12 Month projection:</div><div>{monthProjection}</div></>} 
         
                     buttons={[   <button style={{width: "100%", height: "100%", border: "none", borderRadius: "inherit", backgroundColor: "inherit"}} onClick={() => {setShowTotals(false); setActiveButton(0)}}>Entries</button>,
                                 <button style={{width: "100%", height: "100%", border: "none", borderRadius: "inherit", backgroundColor: "inherit"}} onClick={() => {setShowTotals(true); setActiveButton(1)}}>Totals</button>]} 
