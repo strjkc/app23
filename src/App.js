@@ -6,22 +6,29 @@ import ExpenseEntry from './ExpenseEntry'
 import {useEffect, useState} from 'react'
 import axios from 'axios'
 import {urlExpenses, urlTotals} from './config'
-
+import Total from './Total'
+import EntryDatePicker from './EntryDatePicker'
+import WrapperPannel from './WrapperPannel'
+import FolderView from './FolderView'
 
 function App() {
-  
-  //TODO: Kad gradim newExpense moram da ispravim koje vrednosti ulaze u polja iz dropdowna, i datume
-  
-  
-
-  
   
   const [expenses, setExpenses] = useState([])
   const [monthTotals, setMonthTotals] = useState([])
   const [monthlyExpenses, setMonthlyExpenses] = useState([])
   const [selectedMonth, setSelectedMonth] = useState(null)
   const [totals, setTotals] = useState([])
-  const [showTotals, setShowTotals] = useState(true)
+  const [showTotals, setShowTotals] = useState(false)
+  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", 'November', "December"]
+  const [activeButton, setActiveButton] = useState(0)
+
+  const getCurDateFormated = () => {
+    const curYear = new Date().getFullYear()
+    const curMon = new Date().getMonth() + 1
+    const formatedMon = curMon / 10 < 1 ? `0${curMon}` : String(curMon)
+    const formatedDate = `${curYear}-${formatedMon}`
+    setSelectedMonth(formatedDate)
+  }
 
   useEffect(() => {
     axios.get(urlExpenses)
@@ -29,11 +36,14 @@ function App() {
       console.log(response.data)
       setExpenses(response.data)
     })
+
+    getCurDateFormated()
   }, [])
 
   useEffect(() => {
-    const currMonth = selectedMonth || new Date().getMonth()
-
+    console.log("date: ", selectedMonth)
+    const currMonth = new Date(selectedMonth).getMonth() || new Date().getMonth()
+    
     axios.get(`${urlTotals}/${currMonth}`)
     .then(response => {
       console.log(response.data)
@@ -83,34 +93,63 @@ function App() {
     })
   }
 
+  const removeExistingEntry = (id) => {
+    axios.delete(`${urlExpenses}/${id}`)
+    const newExpenses = expenses.filter(expense => expense.id !== id)
+    setExpenses(newExpenses)
+  } 
+
+  const monthProjection = totals.map((total, index) => <div> <h6>{months[index]}</h6> <Total total={total}/></div>)
+
+
+
+
+
+
   return (
     <div className="App">
-      <div className={"left_pannel pannel"}>
-        <div className={"left_pannel_item"}>
-          <Expense expenseName = {strings.income} value = {monthTotals.income}/>
-          <Expense expenseName = {strings.expenses} value = {monthTotals.expenses}/>
-          <Expense expenseName ={strings.available} value = {monthTotals.available}/>
-        </div>
-        <ExpensesList expenses={monthlyExpenses} putEntry={putExistingEntry} listTitle={strings.expenseList} />
-        <ExpenseEntry changeExpenses={postNewEntry} financialEntry={null}/>
+      <div className={"left_pannel"}>
+          <WrapperPannel item={ 
+            <>
+          <EntryDatePicker dateText={"Displaying entries for: "} state={selectedMonth} setState={(e) => setSelectedMonth(e.target.value)}/> 
+          <Total total={monthTotals}/>
+            </>
+          }
+          flexDirection={"column"}
+          />
+          <WrapperPannel item={
+            <ExpenseEntry changeExpenses={postNewEntry} financialEntry={null}/>
+          }
+          flexDirection={"column"}
+          />
+          <WrapperPannel item={
+              <ExpensesList expenses={monthlyExpenses} putEntry={putExistingEntry} listTitle={strings.expenseList} editable={false} />
+          }
+          flexDirection={"column"}
+           />
       </div>
-      <div className={"right_pannel pannel"} style={{flexDirection: "column"}}>
+      <div className={"right_pannel"}>
+        
         { 
         showTotals ?
-        totals.map(total =>         <div className={"left_pannel_item"}>
-
-                  <Expense expenseName = {strings.income} value = {total.income}/>
-          <Expense expenseName = {strings.expenses} value = {total.expenses}/>
-          <Expense expenseName ={strings.available} value = {total.available}/>
-
-        </div>)
+        <FolderView mainItem={<div>{monthProjection}</div>} 
         
-        :       
-        <>
-        <ExpensesList expenses={listOfExpenses} putEntry={putExistingEntry} listTitle={strings.expenseList}/>
-        <ExpensesList expenses={listOfIncomes} putEntry={putExistingEntry} listTitle={strings.incomeList}/>
-        </>
-}
+                    buttons={[   <button onClick={() => {setShowTotals(false); setActiveButton(0)}}>Entries</button>,
+                                <button onClick={() => {setShowTotals(true); setActiveButton(1)}}>Totals</button>]} 
+
+            activeButton={activeButton}
+        
+        
+        
+        
+        />
+
+        :
+        <FolderView mainItem={            <div style={{display: "flex"}}>
+        <ExpensesList expenses={listOfExpenses} removeItem={removeExistingEntry} putEntry={putExistingEntry} listTitle={strings.expenseList} editable={true}/>
+        <ExpensesList expenses={listOfIncomes} removeItem={removeExistingEntry} putEntry={putExistingEntry} listTitle={strings.incomeList} editable={true}/>
+      </div>} buttons={[   <button onClick={() => {setShowTotals(false); setActiveButton(0)}}>Entries</button>,
+                                <button onClick={() => {setShowTotals(true); setActiveButton(1)}}>Totals</button>]} activeButton={activeButton}/>}
       </div>
     </div>
     

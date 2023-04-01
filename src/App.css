@@ -1,37 +1,51 @@
+@font-face {
+    font-family: Inter;
+    src: url('../fonts/Inter-Regular.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Inter-Bold;
+    src: url('../fonts/Inter-Bold.ttf');
+    font-weight: bold;
+    font-style: normal;
+}
+
 .App{
     display: flex;
     width: 100%;
     justify-content: space-around;
     margin-top: 150px;
+    font-family: Inter;
+}
+body{
+    background: rgb(116,88,168);
+    background: linear-gradient(189deg, rgba(116,88,168,1) 0%, rgba(129,109,167,1) 74%);
+    
+}
+
+.left_pannel > *{
+    margin-bottom: 25px;
+}
+
+.left_pannel{
+    width: 45%;
+    max-width: 700px;
+
 }
 
 .right_pannel{
-    background-color: aquamarine;
-    display: flex;
-    justify-content: space-between;
-    padding:10px;
-    width: 100%;
-}
-.left_pannel_item{
-    background-color: aqua;
+    width: 45%;
+    max-width: 700px;
 }
 
-.pannel{
-    border-radius: 3%;
-    width: 550px;
-    height: fit-content;
-}
 
 #root{
     display: flex;
     align-items: center;
     width: 100%;
 
-}
-
-.left_pannel>*{
-    border-radius: 3%;
-    padding:10px;  
 }
 
 @media only screen and (max-width: 1130px) {

@@ -1,3 +1,4 @@
 .expense_li_item_wrapper{
     display: flex;
+    flex-direction: column;
 }
