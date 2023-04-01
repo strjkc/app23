@@ -134,8 +134,8 @@ function App() {
         showTotals ?
         <FolderView mainItem={<div>{monthProjection}</div>} 
         
-                    buttons={[   <button onClick={() => {setShowTotals(false); setActiveButton(0)}}>Entries</button>,
-                                <button onClick={() => {setShowTotals(true); setActiveButton(1)}}>Totals</button>]} 
+                    buttons={[   <button style={{width: "100%", height: "100%", border: "none", borderRadius: "inherit", backgroundColor: "inherit"}} onClick={() => {setShowTotals(false); setActiveButton(0)}}>Entries</button>,
+                                <button style={{width: "100%", height: "100%", border: "none", borderRadius: "inherit", backgroundColor: "inherit"}} onClick={() => {setShowTotals(true); setActiveButton(1)}}>Totals</button>]} 
 
             activeButton={activeButton}
         
@@ -148,8 +148,8 @@ function App() {
         <FolderView mainItem={            <div style={{display: "flex"}}>
         <ExpensesList expenses={listOfExpenses} removeItem={removeExistingEntry} putEntry={putExistingEntry} listTitle={strings.expenseList} editable={true}/>
         <ExpensesList expenses={listOfIncomes} removeItem={removeExistingEntry} putEntry={putExistingEntry} listTitle={strings.incomeList} editable={true}/>
-      </div>} buttons={[   <button onClick={() => {setShowTotals(false); setActiveButton(0)}}>Entries</button>,
-                                <button onClick={() => {setShowTotals(true); setActiveButton(1)}}>Totals</button>]} activeButton={activeButton}/>}
+      </div>} buttons={[   <button style={{width: "100%", height: "100%", border: "none", borderRadius: "inherit", backgroundColor: "inherit"}} onClick={() => {setShowTotals(false); setActiveButton(0)}}>Entries</button>,
+                                <button style={{width: "100%", height: "100%", border: "none", borderRadius: "inherit", backgroundColor: "inherit"}} onClick={() => {setShowTotals(true); setActiveButton(1)}}>Totals</button>]} activeButton={activeButton}/>}
       </div>
     </div>
     
