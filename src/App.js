@@ -10,6 +10,8 @@ import Total from './Total'
 import EntryDatePicker from './EntryDatePicker'
 import WrapperPannel from './WrapperPannel'
 import FolderView from './FolderView'
+import { useWindowSize } from './Hooks'
+
 
 function App() {
   
@@ -21,6 +23,8 @@ function App() {
   const [showTotals, setShowTotals] = useState(false)
   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", 'November', "December"]
   const [activeButton, setActiveButton] = useState(0)
+  const [width, height] = useWindowSize()
+
 
   const getCurDateFormated = () => {
     const curYear = new Date().getFullYear()
@@ -146,7 +150,7 @@ function App() {
         />
 
         :
-        <FolderView mainItem={            <div style={{display: "flex"}}>
+        <FolderView mainItem={            <div style={{display: "flex", flexDirection: width <= 500 ? "column" : "row"}}>
         <ExpensesList expenses={listOfExpenses} removeItem={removeExistingEntry} putEntry={putExistingEntry} listTitle={strings.expenseList} editable={true}/>
         <ExpensesList expenses={listOfIncomes} removeItem={removeExistingEntry} putEntry={putExistingEntry} listTitle={strings.incomeList} editable={true}/>
       </div>} buttons={[   <button style={{width: "100%", height: "100%", border: "none", borderRadius: "inherit", backgroundColor: "inherit"}} onClick={() => {setShowTotals(false); setActiveButton(0)}}>Entries</button>,

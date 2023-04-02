@@ -1,15 +1,25 @@
 import ExpenseListItem from "./ExpenseListItem"
 import "./ExpensesList.css"
+import { useWindowSize } from "./Hooks"
 
-const style={
-    display: "flex",
-    flexDirection: "column",
-    width: "45%"
-}
+
+
+
+
 
 const ExpensesList = ({expenses, removeItem, listTitle, putEntry, editable}) => {
     //expense should be a list of objects with expenseName and value properties
 
+    const style={
+        display: "flex",
+        flexDirection: "column",
+        width: "45%"
+    }
+    const [width, height] = useWindowSize()
+
+    if(width <= 500){
+        style.width = "100%"
+    }
     return(
         <div style={style}>
             <div style={{padding: "8px", fontSize: "25px", height:"50px", lineHeight:"50px"}} className={`expenses_list_title ${listTitle}_title`}>{listTitle}</div>

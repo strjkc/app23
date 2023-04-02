@@ -1,2 +1,7 @@
-.entry_wrapper{
+@media only screen and (max-width: 1130px) {
+    .inputs-wrapper{
+        display: grid;
+        grid-template-columns: auto;
+    }    
 }
+

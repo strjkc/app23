@@ -10,6 +10,6 @@ if(process.env.NODE_ENV === "development"){
     console.log(`env: ${process.env.NODE_ENV}`)
 
     console.log("Application running in prod mode")
-    urlExpenses = "http://prodserver"
-    urlTotals = "http://prodserver"
+    urlExpenses = "/api/entrys"
+    urlTotals = "/api/totals"
 }

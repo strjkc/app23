@@ -5,6 +5,8 @@ import Dropdown from './Dropdown'
 import "./ExpenseEntry.css"
 import EntryDatePicker from './EntryDatePicker'
 import CheckBox from './CheckBox'
+import { useWindowSize } from './Hooks'
+
 
 const ExpenseEntry = ({changeExpenses, financialEntry, columnLayout, aditionalButton}) => {
 
@@ -17,6 +19,7 @@ const ExpenseEntry = ({changeExpenses, financialEntry, columnLayout, aditionalBu
     const [isReocuring, setIsReocuring]     = useState(financialEntry ? financialEntry.isReocuring : false)
     const [noExpState, setExpState] = useState(false)
     const wrapperRef = useRef()
+    const [width, height] = useWindowSize()
 
     useEffect(() => {
       if(startDate === ""){
@@ -120,6 +123,14 @@ const ExpenseEntry = ({changeExpenses, financialEntry, columnLayout, aditionalBu
         
       }
 
+      console.log("width: ", width)
+
+      if(width <= 500){
+        columnLayout = true
+      }
+
+      
+
 
 const mory = [{name: "Month", setState: setMonthOrYear}, {name: "Year", setState: setMonthOrYear}]
 const exporin = [{name: "Income", setState: setExpenseOrIncome}, {name: "Expense", setState: setExpenseOrIncome}]
@@ -128,7 +139,7 @@ const exporin = [{name: "Income", setState: setExpenseOrIncome}, {name: "Expense
         <div className={"entry_wrapper"} ref={wrapperRef}>
             <div style={{height: "50px", padding: "8px", fontSize: "25px", color: "Black"}}>Unos:</div>
             <form onSubmit={postEntry}>
-                <div style={{display:"grid", gridTemplateColumns: columnLayout ? "auto" : "50% 50%"}}>
+                <div style={{display:"grid", gridTemplateColumns: columnLayout ? "auto" : "50% 50%"}} className={"inputs-wrapper"} >
                 <InputField placeholderText={strings.placeholderExpName} inputName={strings.expName} state={expNameState} setState={changeExpNameState}/>
                 <InputField placeholderText={strings.placeholderAmount} inputName={strings.amount} state={amount} setState={changeAmountState}/>
                 <Dropdown dropdownTitle={strings.monOrYear} state= {monthYear} options={mory}/>
