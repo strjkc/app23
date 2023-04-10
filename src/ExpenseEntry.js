@@ -133,7 +133,7 @@ const ExpenseEntry = ({changeExpenses, financialEntry, columnLayout, aditionalBu
 
 
 const mory = [{name: strings.occurenceOption1, setState: setMonthOrYear}, {name: strings.occurenceOption2, setState: setMonthOrYear}]
-const exporin = [{name: "Income", setState: setExpenseOrIncome}, {name: "Expense", setState: setExpenseOrIncome}]
+const exporin = [{name: strings.typeOption1, setState: setExpenseOrIncome}, {name: strings.typeOption2, setState: setExpenseOrIncome}]
 
     return(
         <div className={"entry_wrapper"} ref={wrapperRef}>

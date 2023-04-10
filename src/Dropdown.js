@@ -1,6 +1,8 @@
 import { useState } from "react"
 import './Dropdown.css'
 import DropdownButton from "./DropdownButton"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faCaretDown } from "@fortawesome/free-solid-svg-icons"
 
 const Dropdown = ({options, dropdownTitle, state}) => {
     const optionToSelect = state || 0
@@ -31,8 +33,13 @@ const Dropdown = ({options, dropdownTitle, state}) => {
     return(
         <div style={{ position: "relative", display: "flex", padding: "8px", flexDirection: "column", width: "90%", color: "black"}}>
             <div style={{marginBottom: "8px"}}>{dropdownTitle}</div>
+            
             <div onClick={toggleOptions} id={wrapperId}  style={{display:"flex", flexDirection:"column"}}>
-                <button style={{display: "flex", justifyContent: "space-between", color:"#8999a7", fontSize:"15px", lineHeight:"30px", height: "30px", borderBottom:"#817df7", outline:"none", borderTop:"none", borderRight: "none", borderLeft:"none", borderBottomStyle:"solid", borderBottomWidth:"2px", backgroundColor:"inherit"}} type="button" className={"dropdown_main"}><div>Chose an option: {options[optionToSelect].name}</div> <div>icon</div></button>
+                <button style={{display: "flex", justifyContent: "space-between", color:"#8999a7", fontSize:"15px", lineHeight:"30px", height: "30px", borderBottom:"#817df7", outline:"none", borderTop:"none", borderRight: "none", borderLeft:"none", borderBottomStyle:"solid", borderBottomWidth:"2px", backgroundColor:"inherit"}}
+                        type="button" className={"dropdown_main"}>
+                            <div>{options[optionToSelect].name}</div>
+                            <FontAwesomeIcon icon={faCaretDown} style={{color: "#743eb6",}} />
+                </button>
                 {showOptions ? 
                 <div style={{display: "flex", flexDirection:"column"}}>{optionsToDisplay}</div> 
                 : <></>}

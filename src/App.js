@@ -103,7 +103,7 @@ function App() {
     setExpenses(newExpenses)
   } 
 
-  const monthProjection = totals.map((total, index) => <><Total total={total} title={months[index]}/></>)
+  const monthProjection = totals.map((total, index) => <><Total total={total} title={strings.months[index]}/></>)
 
 
 
@@ -137,10 +137,10 @@ function App() {
         
         { 
         showTotals ?
-        <FolderView mainItem={<><div style={{fontSize: "25px", height: "50px", padding: "8px", color: "black"}}>12 Month projection:</div><div>{monthProjection}</div></>} 
+        <FolderView mainItem={<><div style={{fontSize: "25px", height: "50px", padding: "8px", color: "black"}}>{strings.projectionTitle}</div><div>{monthProjection}</div></>} 
         
-                    buttons={[   <button style={{width: "100%", height: "100%", border: "none", borderRadius: "inherit", backgroundColor: "inherit"}} onClick={() => {setShowTotals(false); setActiveButton(0)}}>Entries</button>,
-                                <button style={{width: "100%", height: "100%", border: "none", borderRadius: "inherit", backgroundColor: "inherit"}} onClick={() => {setShowTotals(true); setActiveButton(1)}}>Totals</button>]} 
+                    buttons={[   <button style={{width: "100%", height: "100%", border: "none", borderRadius: "inherit", backgroundColor: "inherit"}} onClick={() => {setShowTotals(false); setActiveButton(0)}}>{strings.folderTab1}</button>,
+                                <button style={{width: "100%", height: "100%", border: "none", borderRadius: "inherit", backgroundColor: "inherit"}} onClick={() => {setShowTotals(true); setActiveButton(1)}}>{strings.folderTab2}</button>]} 
 
             activeButton={activeButton}
         
@@ -153,8 +153,8 @@ function App() {
         <FolderView mainItem={            <div style={{display: "flex", flexDirection: width <= 500 ? "column" : "row"}}>
         <ExpensesList expenses={listOfExpenses} removeItem={removeExistingEntry} putEntry={putExistingEntry} listTitle={strings.expenseList} editable={true}/>
         <ExpensesList expenses={listOfIncomes} removeItem={removeExistingEntry} putEntry={putExistingEntry} listTitle={strings.incomeList} editable={true}/>
-      </div>} buttons={[   <button style={{width: "100%", height: "100%", border: "none", borderRadius: "inherit", backgroundColor: "inherit"}} onClick={() => {setShowTotals(false); setActiveButton(0)}}>Entries</button>,
-                                <button style={{width: "100%", height: "100%", border: "none", borderRadius: "inherit", backgroundColor: "inherit"}} onClick={() => {setShowTotals(true); setActiveButton(1)}}>Totals</button>]} activeButton={activeButton}/>}
+      </div>} buttons={[   <button style={{width: "100%", height: "100%", border: "none", borderRadius: "inherit", backgroundColor: "inherit"}} onClick={() => {setShowTotals(false); setActiveButton(0)}}>{strings.folderTab1}</button>,
+                                <button style={{width: "100%", height: "100%", border: "none", borderRadius: "inherit", backgroundColor: "inherit"}} onClick={() => {setShowTotals(true); setActiveButton(1)}}>{strings.folderTab2}</button>]} activeButton={activeButton}/>}
       </div>
     </div>
     

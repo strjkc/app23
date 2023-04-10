@@ -7,8 +7,8 @@ const strings = {
     isReocuring: "Jednokratni trosak/prihod:",
     expDate: "Istice:",
     startDate: "Racuna se od:",
-    monOrYear: "Godisnje/Mesecno:",
-    type: "Trosak ili prihod:",
+    monOrYear: "Obracunava se:",
+    type: "Unos je:",
     incomeList: "Lista prihoda:",
     expenseList: "Lista troskova:",
     noExpDate: "Trajni unos:",
@@ -18,8 +18,15 @@ const strings = {
     selectedMonth: "Izabrani mesec:",
     entryTitle: "Unos:",
     occurenceOption1: "Mesecno",
-    occurenceOption2: "Godisnje"
-    
+    occurenceOption2: "Godisnje",
+    typeOption1: "Prihod",
+    typeOption2: "Trosak",
+    folderTab1: "Unosi",
+    folderTab2: "Godisnje",
+    projectionTitle: "Godisnji prikaz:",
+    months: ["Januar:", "Februar:", "Mart:", "April:", "Maj:", "Jun:", "Jul:", "Avgust:", "Septembar:", "Oktobar:", 'Novembar:', "Decembar:"],
+    placeholderName: "Plata",
+    placeholderAmount: "1000", 
 }
 
 export default strings
