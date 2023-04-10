@@ -115,8 +115,8 @@ function App() {
       <div className={"left_pannel"}>
           <WrapperPannel item={ 
             <>
-            <div style={{fontSize: "25px", height: "50px", padding: "8px", color: "black"}}>Data for current month:</div>
-          <EntryDatePicker dateText={"Currently selected date: "} state={selectedMonth} setState={(e) => setSelectedMonth(e.target.value)}/> 
+            <div style={{fontSize: "25px", height: "50px", padding: "8px", color: "black"}}>{strings.currenthMonthTotals}</div>
+          <EntryDatePicker dateText={strings.selectedMonth} state={selectedMonth} setState={(e) => setSelectedMonth(e.target.value)}/> 
           <Total total={monthTotals}/>
             </>
           }

@@ -14,6 +14,11 @@ const strings = {
     noExpDate: "Trajni unos:",
     placeholderExpName: "Plata",
     placeholderAmount: "100000",
+    currenthMonthTotals: "Obracun za tekuci mesec:",
+    selectedMonth: "Izabrani mesec:",
+    entryTitle: "Unos:",
+    occurenceOption1: "Mesecno",
+    occurenceOption2: "Godisnje"
     
 }
 

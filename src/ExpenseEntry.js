@@ -132,12 +132,12 @@ const ExpenseEntry = ({changeExpenses, financialEntry, columnLayout, aditionalBu
       
 
 
-const mory = [{name: "Month", setState: setMonthOrYear}, {name: "Year", setState: setMonthOrYear}]
+const mory = [{name: strings.occurenceOption1, setState: setMonthOrYear}, {name: strings.occurenceOption2, setState: setMonthOrYear}]
 const exporin = [{name: "Income", setState: setExpenseOrIncome}, {name: "Expense", setState: setExpenseOrIncome}]
 
     return(
         <div className={"entry_wrapper"} ref={wrapperRef}>
-            <div style={{height: "50px", padding: "8px", fontSize: "25px", color: "Black"}}>Unos:</div>
+            <div style={{height: "50px", padding: "8px", fontSize: "25px", color: "Black"}}>{strings.entryTitle}</div>
             <form onSubmit={postEntry}>
                 <div style={{display:"grid", gridTemplateColumns: columnLayout ? "auto" : "50% 50%"}} className={"inputs-wrapper"} >
                 <InputField placeholderText={strings.placeholderExpName} inputName={strings.expName} state={expNameState} setState={changeExpNameState}/>
