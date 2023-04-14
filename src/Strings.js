@@ -4,7 +4,7 @@ const strings = {
     available: "Raspolozivo:",
     expName: "Naziv unosa:",
     amount: "Iznos:",
-    isReocuring: "Jednokratni trosak/prihod:",
+    isReocuring: "Nije jednokratan:",
     expDate: "Istice:",
     startDate: "Racuna se od:",
     monOrYear: "Obracunava se:",

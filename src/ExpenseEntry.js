@@ -19,6 +19,7 @@ const ExpenseEntry = ({changeExpenses, financialEntry, columnLayout, aditionalBu
     const [isReocuring, setIsReocuring]     = useState(financialEntry ? financialEntry.isReocuring : false)
     const [currDate, setCurrDate] = useState("")
     const [noExpState, setExpState] = useState(false)
+    const [enableExpDate, setEnableExpDate] = useState(false)
     const wrapperRef = useRef()
     const [width, height] = useWindowSize()
 
@@ -74,12 +75,21 @@ const ExpenseEntry = ({changeExpenses, financialEntry, columnLayout, aditionalBu
       const populateStartDate = (event) => {
         event.preventDefault()
         console.log(event.target.value)
-        setStartDate(event.target.value)
+        if(!isReocuring){
+          setStartDate(event.target.value)
+          setExpdate(event.target.value)  
+        }else{
+          setStartDate(event.target.value)
+        }
       }
 
       const populateIsReocuring = (event) => {
         console.log(event.target.checked)
         setIsReocuring(event.target.checked)
+        setEnableExpDate(!enableExpDate)
+        if(!event.target.checked){
+          setExpdate(startDate)
+        }
         console.log(isReocuring)
 
       }
@@ -151,8 +161,8 @@ const exporin = [{name: strings.typeOption1, setState: setExpenseOrIncome}, {nam
                 <Dropdown dropdownTitle={strings.type} state = {expenseIncome} options={exporin}/>
                 <CheckBox inputName={strings.isReocuring} setState={populateIsReocuring} state={isReocuring}/>
                 <CheckBox inputName={strings.noExpDate} setState={setMaxDate} state={noExpState}/>
-                <EntryDatePicker state={startDate} setState={populateStartDate} dateText={strings.startDate}/>
-                <EntryDatePicker state={expDate} setState={changeExpdateState} dateText={strings.expDate}/>
+                <EntryDatePicker isEnabled={true} state={startDate} setState={populateStartDate} dateText={strings.startDate}/>
+                <EntryDatePicker isEnabled={enableExpDate} state={expDate} setState={changeExpdateState} dateText={strings.expDate}/>
                 </div>
                 <div style={{display: "flex", padding: "8px", width: "100%", height: "30px",justifyContent: aditionalButton ? "space-around" : "center", alignItems: "center"}}>
                   <button style={{width: "25%", height: "30px", backgroundColor: "#817df7", outline: "none", border: "none", borderRadius: "5px", color: "#F7F9FA"}} type="submit">Save</button>  
