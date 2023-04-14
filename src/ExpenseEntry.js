@@ -84,8 +84,10 @@ const ExpenseEntry = ({changeExpenses, financialEntry, columnLayout, aditionalBu
       const setMaxDate = (event) => {
         if(event.target.checked){
           setExpdate("9999-12")
+          setExpState(true)
         }else{
           setExpdate("")
+          setExpState(false)
         }
       }
 
