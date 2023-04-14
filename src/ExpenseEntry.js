@@ -12,11 +12,12 @@ const ExpenseEntry = ({changeExpenses, financialEntry, columnLayout, aditionalBu
 
     const [expNameState, setExpNameState] = useState(financialEntry ? financialEntry.name         : ""  )
     const [amount, setAmount]               = useState(financialEntry ? financialEntry.amount       : "" )
-    const [expDate, setExpdate]             = useState(financialEntry ? financialEntry.endDate     : 0 )
+    const [expDate, setExpdate]             = useState(financialEntry ? financialEntry.endDate     : "" )
     const [monthYear, setMonthYear]         = useState(financialEntry ? financialEntry.frequence    : 0 )
     const [expenseIncome, setExpenseIncome] = useState(financialEntry ? financialEntry.isExpense    : 0  )
     const [startDate, setStartDate]         = useState(financialEntry ? financialEntry.startDate    : "")
     const [isReocuring, setIsReocuring]     = useState(financialEntry ? financialEntry.isReocuring : false)
+    const [currDate, setCurrDate] = useState("")
     const [noExpState, setExpState] = useState(false)
     const wrapperRef = useRef()
     const [width, height] = useWindowSize()
@@ -31,8 +32,10 @@ const ExpenseEntry = ({changeExpenses, financialEntry, columnLayout, aditionalBu
         }else{
           month = currMonth + 1
         }
-        setStartDate(`${currYear}-${month}`)
-        setExpdate(`${currYear}-${month}`)
+        const dateToSet = `${currYear}-${month}`
+        setCurrDate(dateToSet)
+        setStartDate(dateToSet)
+        setExpdate(dateToSet)
       }
     }, [])
 
@@ -86,7 +89,7 @@ const ExpenseEntry = ({changeExpenses, financialEntry, columnLayout, aditionalBu
           setExpdate("9999-12")
           setExpState(true)
         }else{
-          setExpdate("")
+          setExpdate(currDate)
           setExpState(false)
         }
       }
