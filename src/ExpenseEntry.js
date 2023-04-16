@@ -144,7 +144,16 @@ const ExpenseEntry = ({changeExpenses, financialEntry, columnLayout, aditionalBu
         columnLayout = true
       }
 
+      const [buttonColor, setButtonColor] = useState("#817df7")
+      const buttonStyle = {width: "25%", height: "30px", backgroundColor: buttonColor , outline: "none", border: "none", borderRadius: "5px", color: "#F7F9FA"}
       
+      
+
+      const changeButtonColor = () => {
+        setButtonColor("#5c57f4")
+        
+        
+      }
 
 
 const mory = [{name: strings.occurenceOption1, setState: setMonthOrYear}, {name: strings.occurenceOption2, setState: setMonthOrYear}]
@@ -165,7 +174,11 @@ const exporin = [{name: strings.typeOption1, setState: setExpenseOrIncome}, {nam
                 <EntryDatePicker isEnabled={enableExpDate} state={expDate} setState={changeExpdateState} dateText={strings.expDate}/>
                 </div>
                 <div style={{display: "flex", padding: "8px", width: "100%", height: "30px",justifyContent: aditionalButton ? "space-around" : "center", alignItems: "center"}}>
-                  <button style={{width: "25%", height: "30px", backgroundColor: "#817df7", outline: "none", border: "none", borderRadius: "5px", color: "#F7F9FA"}} type="submit">Save</button>  
+                  <button style={buttonStyle}
+                          type="submit"
+                          //onClick={}
+                          onMouseDown={changeButtonColor}
+                          onMouseUp={() => setButtonColor("#817df7")}>Save</button>  
                   {aditionalButton}
                 </div>
             </form>
