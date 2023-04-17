@@ -8,7 +8,7 @@ const DropdownButton = ({option, toggleOptions, index}) => {
     }
 
     return(
-        <button style={{height:"30px"}} type="button" onClick={(e) => handleClick(e)} value={index}>{option.name}</button>
+        <button style={{height:"30px", textAlign:"start"}} type="button" onClick={(e) => handleClick(e)} value={index}>{option.name}</button>
     )
 
 }
