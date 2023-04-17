@@ -171,7 +171,7 @@ const exporin = [{name: strings.typeOption1, setState: setExpenseOrIncome}, {nam
                 <CheckBox inputName={strings.isReocuring} setState={populateIsReocuring} state={isReocuring}/>
                 <CheckBox inputName={strings.noExpDate} setState={setMaxDate} state={noExpState}/>
                 <EntryDatePicker isEnabled={true} state={startDate} setState={populateStartDate} dateText={strings.startDate}/>
-                <EntryDatePicker isEnabled={enableExpDate} state={expDate} setState={changeExpdateState} dateText={strings.expDate}/>
+                <EntryDatePicker isEnabled={isReocuring} state={expDate} setState={changeExpdateState} dateText={strings.expDate}/>
                 </div>
                 <div style={{display: "flex", padding: "8px", width: "100%", height: "30px",justifyContent: aditionalButton ? "space-around" : "center", alignItems: "center"}}>
                   <button style={buttonStyle}

@@ -116,7 +116,7 @@ function App() {
           <WrapperPannel item={ 
             <>
             <div style={{fontSize: "25px", height: "50px", padding: "8px", color: "black"}}>{strings.currenthMonthTotals}</div>
-          <EntryDatePicker dateText={strings.selectedMonth} state={selectedMonth} setState={(e) => setSelectedMonth(e.target.value)}/> 
+          <EntryDatePicker isEnabled={true} dateText={strings.selectedMonth} state={selectedMonth} setState={(e) => setSelectedMonth(e.target.value)}/> 
           <Total total={monthTotals}/>
             </>
           }
