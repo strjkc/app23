@@ -25,6 +25,10 @@ const ExpenseEntry = ({changeExpenses, financialEntry, columnLayout, aditionalBu
     const [width, height] = useWindowSize()
 
     useEffect(() => {
+      getCurrentDates()
+    }, [])
+
+    const getCurrentDates = () => {
       if(startDate === ""){
         const currYear = new Date().getFullYear()
         const currMonth = new Date().getMonth()
@@ -39,7 +43,7 @@ const ExpenseEntry = ({changeExpenses, financialEntry, columnLayout, aditionalBu
         setStartDate(dateToSet)
         setExpdate(dateToSet)
       }
-    }, [])
+    }
 
     //set state
     const changeExpNameState = (event) => {
@@ -113,6 +117,7 @@ const ExpenseEntry = ({changeExpenses, financialEntry, columnLayout, aditionalBu
         setExpenseIncome(financialEntry ? financialEntry.isExpense    : 0  )
         setStartDate   (financialEntry ? financialEntry.startDate    : ""  )
         setIsReocuring (financialEntry ? financialEntry.isReocuring : false)
+        getCurrentDates()
       }
 
       //post state

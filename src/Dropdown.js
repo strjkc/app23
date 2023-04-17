@@ -45,7 +45,7 @@ const Dropdown = ({options, dropdownTitle, state}) => {
     const optionsToDisplay = options.map((option, index) => <DropdownButton index={index} toggle={toggleOptions} option={option}/>)
     
     return(
-        <div style={{display: "flex", padding: "8px", flexDirection: "column", width: "90%", color: "black"}}>
+        <div style={{position: "relative", display: "flex", padding: "8px", flexDirection: "column", width: "90%", color: "black"}}>
             <div style={{marginBottom: "8px"}}>{dropdownTitle}</div>
             
             <div ref={ref} onClick={toggleOptions} className={wrapperId}  style={{display:"flex", flexDirection:"column"}}>
@@ -55,7 +55,7 @@ const Dropdown = ({options, dropdownTitle, state}) => {
                             <FontAwesomeIcon className="dropdown_wrapper" icon={faCaretDown} style={{color: "#743eb6",}} />
                 </button>
                 {showOptions ? 
-                <>{optionsToDisplay}</>
+                <div style={{position: "absolute", display: "flex", flexDirection:"column", zIndex: "50", margin: "30px 0", width: "95%"}}>{optionsToDisplay}</div>
                 : <></>}
             </div>
         </div>
