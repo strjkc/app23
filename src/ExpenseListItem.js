@@ -3,6 +3,7 @@ import ExpenseEntry from "./ExpenseEntry"
 import { useState } from "react"
 import axios from "axios"
 import {urlExpenses} from './config'
+import Button from "./Button"
 
 
 const ExpenseListItem = ({expense, putEntry, removeItem, editable, textColor}) => {
@@ -38,8 +39,11 @@ const ExpenseListItem = ({expense, putEntry, removeItem, editable, textColor}) =
             {
             displayEdit ?
                 <div style={{ boxShadow: editable ? "rgb(129, 125, 247) 1px 8px 17px -2px" : "none", padding: editable ? "8px" : "0px", borderRadius: editable ? displayEdit ? "0 0 8px 8px" : "8px" : "0px"}}>
-                <ExpenseEntry changeExpenses={putEntry} financialEntry={expense} columnLayout={true} aditionalButton={<button onClick={(e) => removeItem(expense.id)} style={{width: "25%", height: "30px", backgroundColor: "#817df7", outline: "none", border: "none", borderRadius: "5px", color: "#F7F9FA"}} type="submit">Delete</button>  }/>
-                
+                <ExpenseEntry changeExpenses={putEntry} financialEntry={expense} columnLayout={true} aditionalButton={
+                    <Button buttonOnClick={(e) => removeItem(expense.id)}
+                            buttonType={"submit"}
+                            buttonText={"Obrisi"}
+                    />}/>
                 </div>
             :<></>
             }
