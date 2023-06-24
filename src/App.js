@@ -41,7 +41,7 @@ function App() {
   useEffect(() => {
     axios.get(urlSavings)
     .then(response => {
-      console.log("Savings:", response.data)
+ //     console.log("Savings:", response.data)
       const saving = {
         currentSaving: Math.ceil(response.data[0].currentSaving),
         totalSaved: Math.ceil(response.data[0].totalSaved),
@@ -49,12 +49,12 @@ function App() {
       }
       setSavings(saving)
     })
-  })
+  },[])
 
   useEffect(() => {
     axios.get(urlExpenses)
     .then(response => {
-      console.log(response.data)
+ //     console.log(response.data)
       setExpenses(response.data)
     })
 
@@ -62,17 +62,17 @@ function App() {
   }, [])
 
   useEffect(() => {
-    console.log("date: ", selectedMonth)
+ //   console.log("date: ", selectedMonth)
     const currMonth = new Date(selectedMonth).getMonth() || new Date().getMonth()
     
     axios.get(`${urlTotals}/${currMonth}`)
     .then(response => {
-      console.log(response.data)
+ //     console.log(response.data)
       setMonthTotals(response.data)
     })
     axios.get(`${urlExpenses}/${currMonth}`)
     .then(response => {
-      console.log(response.data)
+  //    console.log(response.data)
       setMonthlyExpenses(response.data)
     })
 
@@ -81,7 +81,7 @@ function App() {
   useEffect(() => {
     axios.get(urlTotals)
     .then(response => {
-      console.log(response.data)
+ //     console.log(response.data)
       setTotals(response.data)
     })
   }, [expenses])
@@ -94,18 +94,18 @@ function App() {
   const postNewEntry = (newEntry, resetState) => {
     axios.post(urlExpenses, newEntry)
     .then( (response) => {
-      console.log(`Response data new entry: ${response.data}`)
+ //     console.log(`Response data new entry: ${response.data}`)
       const newList = expenses.concat(response.data)
-      console.log(`New list`, newList) 
+ //     console.log(`New list`, newList) 
       setExpenses(newList)
       resetState()
     })
   }
 
   const putExistingEntry = (changedEntry, resetState) => {
-    console.log("changed Entry:", changedEntry)
+ //   console.log("changed Entry:", changedEntry)
     const putUrl = `${urlExpenses}/${changedEntry.id}`
-    console.log("PUT URL: ", putUrl)
+ //   console.log("PUT URL: ", putUrl)
     axios.put(putUrl, changedEntry)
     .then( (response) => {
       const newExpenseList = expenses.map(expense => expense.id !== response.data.id ? expense : response.data)
@@ -115,6 +115,7 @@ function App() {
   }
 
   const removeExistingEntry = (id) => {
+    console.log("Removing item")
     axios.delete(`${urlExpenses}/${id}`)
     const newExpenses = expenses.filter(expense => expense.id !== id)
     setExpenses(newExpenses)

@@ -40,7 +40,7 @@ const ExpenseListItem = ({expense, putEntry, removeItem, editable, textColor}) =
             displayEdit ?
                 <div style={{ boxShadow: editable ? "rgb(129, 125, 247) 1px 8px 17px -2px" : "none", padding: editable ? "8px" : "0px", borderRadius: editable ? displayEdit ? "0 0 8px 8px" : "8px" : "0px"}}>
                 <ExpenseEntry changeExpenses={putEntry} financialEntry={expense} columnLayout={true} aditionalButton={
-                    <Button buttonOnClick={(e) => removeItem(expense.id)}
+                    <Button buttonOnClik={(e) => removeItem(expense.id)}
                             buttonType={"submit"}
                             buttonText={"Obrisi"}
                     />}/>

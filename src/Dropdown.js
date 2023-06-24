@@ -12,13 +12,13 @@ const Dropdown = ({options, dropdownTitle, state}) => {
     const wrapperId = "dropdown_wrapper"
 // dodati sklanjanje event listenera kad god je showOptions false
     function handleClickOutside(event) {   
-        console.log("event target: ", ref.current)
+   //     console.log("event target: ", ref.current)
 
          if(ref.current && !ref.current.contains(event.target)){
         //ako si kliknuo na nesto sto nije wrapper onda zatvori padajuci meni
-        console.log("Removing doc listener")
+ //       console.log("Removing doc listener")
         document.removeEventListener("mousedown", handleClickOutside)
-        console.log("handleClick showOptions: ", showOptions)
+//        console.log("handleClick showOptions: ", showOptions)
         setShowOptions(false)
         setDocumentListenerAttached(false)
 
@@ -28,10 +28,10 @@ const Dropdown = ({options, dropdownTitle, state}) => {
       }
 
     const toggleOptions = () => {
-        console.log("calling toggle", documentListenerAttached)
+ //       console.log("calling toggle", documentListenerAttached)
         //ako listener nije attachovan onda ga attachuj i postavi handleclick funkciju. U svakom slucaju toggleuj opcije
         if(!documentListenerAttached){  
-            console.log("Setting doc listener")      
+//            console.log("Setting doc listener")      
             document.addEventListener("mousedown", handleClickOutside)
             setDocumentListenerAttached(true)
             setShowOptions(true) 

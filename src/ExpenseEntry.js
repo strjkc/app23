@@ -48,8 +48,8 @@ const ExpenseEntry = ({changeExpenses, financialEntry, columnLayout, aditionalBu
     //set state
     const changeExpNameState = (event) => {
         event.preventDefault()
-        console.log("ref", wrapperRef.current.offsetWidth)
-        console.log(event.target.value)
+   //     console.log("ref", wrapperRef.current.offsetWidth)
+   //     console.log(event.target.value)
         setExpNameState(event.target.value)
       }
     
@@ -61,25 +61,25 @@ const ExpenseEntry = ({changeExpenses, financialEntry, columnLayout, aditionalBu
     
       const changeExpdateState = (event) => {
         event.preventDefault()
-        console.log(event.target.value)
+   //     console.log(event.target.value)
         setExpdate(event.target.value)
       }
 
       const setMonthOrYear = (event) => {
           event.preventDefault()
-          console.log(event.target.value)
+     //     console.log(event.target.value)
           setMonthYear(event.target.value)
       }
 
       const setExpenseOrIncome = (event) => {
           event.preventDefault()
-          console.log(event.target.value)
+   //       console.log(event.target.value)
           setExpenseIncome(event.target.value)
       }
 
       const populateStartDate = (event) => {
         event.preventDefault()
-        console.log(event.target.value)
+   //     console.log(event.target.value)
         if(!isReocuring){
           setStartDate(event.target.value)
           setExpdate(event.target.value)  
@@ -89,13 +89,13 @@ const ExpenseEntry = ({changeExpenses, financialEntry, columnLayout, aditionalBu
       }
 
       const populateIsReocuring = (event) => {
-        console.log(event.target.checked)
+  //      console.log(event.target.checked)
         setIsReocuring(event.target.checked)
         setEnableExpDate(!enableExpDate)
         if(!event.target.checked){
           setExpdate(startDate)
         }
-        console.log(isReocuring)
+  //      console.log(isReocuring)
 
       }
 
@@ -133,18 +133,18 @@ const ExpenseEntry = ({changeExpenses, financialEntry, columnLayout, aditionalBu
                 isReocuring: isReocuring,
                 frequence: Number(monthYear)
             }
-            console.log("New entry is:", newEntry)
+ //           console.log("New entry is:", newEntry)
             changeExpenses(newEntry, resetState)
 
       }
       const flexStyle = {display: "flex", flexDirection: columnLayout || "row"}
       if (wrapperRef.current){
-        console.log(wrapperRef)
+ //       console.log(wrapperRef)
         flexStyle.flexDirection = wrapperRef.current.offsetWidth <= 500 ? "column" : "row"
         
       }
 
-      console.log("width: ", width)
+ //     console.log("width: ", width)
 
       if(width <= 500){
         columnLayout = true

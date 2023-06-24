@@ -1,8 +1,8 @@
 const DropdownButton = ({option, toggleOptions, index}) => {
 
     const handleClick = (event) => {
-        console.log("calling click handle for dropdown button")
-        console.log("Click event ", event.target.value)
+  //      console.log("calling click handle for dropdown button")
+   //     console.log("Click event ", event.target.value)
         option.setState(event)
 
     }
