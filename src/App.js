@@ -5,12 +5,13 @@ import strings from './Strings'
 import ExpenseEntry from './ExpenseEntry'
 import {useEffect, useState} from 'react'
 import axios from 'axios'
-import {urlExpenses, urlTotals} from './config'
+import {urlExpenses, urlTotals, urlSavings} from './config'
 import Total from './Total'
 import EntryDatePicker from './EntryDatePicker'
 import WrapperPannel from './WrapperPannel'
 import FolderView from './FolderView'
 import { useWindowSize } from './Hooks'
+import InputField from './InputField'
 
 
 function App() {
@@ -20,10 +21,13 @@ function App() {
   const [monthlyExpenses, setMonthlyExpenses] = useState([])
   const [selectedMonth, setSelectedMonth] = useState(null)
   const [totals, setTotals] = useState([])
+  const [showSavings, setShowSavings] = useState(false)
   const [showTotals, setShowTotals] = useState(false)
   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", 'November', "December"]
   const [activeButton, setActiveButton] = useState(0)
+  const [activeButtonSavings, setActiveButtonSavings] = useState(0)
   const [width, height] = useWindowSize()
+  const [savings, setSavings] = useState(null)
 
 
   const getCurDateFormated = () => {
@@ -33,6 +37,19 @@ function App() {
     const formatedDate = `${curYear}-${formatedMon}`
     setSelectedMonth(formatedDate)
   }
+
+  useEffect(() => {
+    axios.get(urlSavings)
+    .then(response => {
+      console.log("Savings:", response.data)
+      const saving = {
+        currentSaving: Math.ceil(response.data[0].currentSaving),
+        totalSaved: Math.ceil(response.data[0].totalSaved),
+        percentToSave: response.data[0].percentToSave
+      }
+      setSavings(saving)
+    })
+  })
 
   useEffect(() => {
     axios.get(urlExpenses)
@@ -107,21 +124,45 @@ function App() {
 
 
 
-
+/*
+    treba napraviti poseban objekat za savings, trebalo bi refaktorisati total objekat tako da prima array neki i izlistava ga da bi mogao da ga koristim i za totals i za savings
+    server treba srediti da salje samo objekat ne array sa jednim objektom
+    prevode uraditi za tabove nove
+     
+*/
 
 
   return (
     <div className="App">
       <div className={"left_pannel"}>
-          <WrapperPannel item={ 
+        {showSavings ?
+          <FolderView mainItem={ 
+            <>
+              <Expense expenseName={"Savings for current month:"} value={savings.currentSaving}/>
+              <InputField placeholderText="Total saved" inputName="Total saved" state={savings.totalSaved} setState={setSavings}/>
+              <InputField placeholderText="Saved percent" inputName="Saved percent" state={savings.percentToSave} setState={setSavings}/>
+            </>
+          }
+          buttons={[   <button style={{width: "100%", height: "100%", border: "none", borderRadius: "inherit", backgroundColor: "inherit"}} onClick={() => {setShowSavings(false); setActiveButtonSavings(0)}}>Totals</button>,
+          <button style={{width: "100%", height: "100%", border: "none", borderRadius: "inherit", backgroundColor: "inherit"}} onClick={() => {setShowSavings(true); setActiveButtonSavings(1)}}>Savings</button>]} 
+          activeButton={activeButtonSavings}
+          >
+          </FolderView>
+          :
+          <FolderView mainItem={ 
             <>
             <div style={{fontSize: "25px", height: "50px", padding: "8px", color: "black"}}>{strings.currenthMonthTotals}</div>
           <EntryDatePicker isEnabled={true} dateText={strings.selectedMonth} state={selectedMonth} setState={(e) => setSelectedMonth(e.target.value)}/> 
           <Total total={monthTotals}/>
             </>
           }
-          flexDirection={"column"}
-          />
+          buttons={[   <button style={{width: "100%", height: "100%", border: "none", borderRadius: "inherit", backgroundColor: "inherit"}} onClick={() => {setShowSavings(false); setActiveButtonSavings(0)}}>Totals</button>,
+          <button style={{width: "100%", height: "100%", border: "none", borderRadius: "inherit", backgroundColor: "inherit"}} onClick={() => {setShowSavings(true); setActiveButtonSavings(1)}}>Savings</button>]} 
+          activeButton={activeButtonSavings}
+          >
+          </FolderView>
+          }
+
           <WrapperPannel item={
             <ExpenseEntry changeExpenses={postNewEntry} financialEntry={null}/>
           }
