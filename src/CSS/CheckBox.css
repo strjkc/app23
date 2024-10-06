@@ -1,0 +1,4 @@
+.checbox-wrapper{display: flex; padding: 8px; width: 90%; position:relative; z-index:'0'; color: black}
+.checkbox-label{margin-right: 8px}
+.checkbox{accent-color: #817df7}
+

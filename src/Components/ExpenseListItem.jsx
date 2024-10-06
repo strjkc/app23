@@ -1,8 +1,8 @@
-import "./ExpenseListItem.css"
+import "../CSS/ExpenseListItem.css"
 import ExpenseEntry from "./ExpenseEntry"
 import { useState } from "react"
 import axios from "axios"
-import {urlExpenses} from './config'
+import {urlExpenses} from '../Config/config'
 import Button from "./Button"
 
 

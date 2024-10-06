@@ -1,4 +1,4 @@
-import './Expense.css'
+import '../CSS/Expense.css'
 
 const Expense = ({expenseName, value}) => {
     return(

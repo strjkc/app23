@@ -1,6 +1,6 @@
 import ExpenseListItem from "./ExpenseListItem"
-import "./ExpensesList.css"
-import { useWindowSize } from "./Hooks"
+import "../CSS/ExpensesList.css"
+import { useWindowSize } from "../Helper/Hooks"
 
 
 

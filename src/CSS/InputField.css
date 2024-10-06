@@ -1,0 +1,22 @@
+.input-wrapper{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    padding: 8px;
+}
+
+label{
+    margin-bottom: 8px; 
+    color: black;
+}
+
+input{
+    height: 30px;
+    border-bottom:#817df7;
+    outline:none;
+    border-style:solid;
+    border-radius:5px 5px 0 0;
+    border-bottom-width:2px;
+    background-color:inherit
+}
+

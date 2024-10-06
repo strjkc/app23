@@ -1,4 +1,4 @@
-import strings from "./Strings"
+import strings from "../Localization/Strings"
 import Expense from "./Expense"
 
 const totalStyle= {
