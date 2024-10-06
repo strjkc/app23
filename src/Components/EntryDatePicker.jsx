@@ -7,7 +7,7 @@ const EntryDatePicker = ({data}) => {
 
     return(
         <div className={"date-wrapper"}>
-            <label className={labelClass} for="date">{data.name}</label>
+            <label className={labelClass} htmlFor="date">{data.name}</label>
             <input disabled={data.isDisabled} className={inputClass} placeholder={"MM/YYYY"} type="month" id="date" name="date" value={data.state} onChange={e => data.setState(e.target.value)}/>
         </div>
     )

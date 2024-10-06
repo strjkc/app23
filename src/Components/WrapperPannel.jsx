@@ -1,20 +1,20 @@
-const WrapperPannel = ({item, flexDirection, justifyOption, alignOption}) => {
+const WrapperPannel = (props) => {
     const style = {
         backgroundColor: "#F7F9FA",
         borderRadius: "8px",
         boxShadow: "1px 8px 17px -2px #000000",
         display: "flex",
-        flexDirection: flexDirection || "row",
+        flexDirection: "column",
        
         height: "fit-content",
         padding: "12px",
-        justifyContent: justifyOption || "none",
-        alignContent: alignOption || "none"
+        justifyContent: "none",
+        alignContent:  "none"
     }
     return(
-        <dvi style={style}>
-            {item}
-        </dvi>
+        <div style={style}>
+            {props.children}
+        </div>
     )
 }
 

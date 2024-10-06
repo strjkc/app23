@@ -1,5 +1,4 @@
-const FolderView = ({setShowSavings,setActiveButtonSavings , children}) => {
-
+const FolderView = ({data, children}) => {
     const style={
         display: "flex",
         flexDirection:"column",
@@ -18,8 +17,8 @@ const FolderView = ({setShowSavings,setActiveButtonSavings , children}) => {
     return(
         <div >
             <div style={{display: "flex"}}>
-            <button onClick={() => {setShowSavings(false); setActiveButtonSavings(0)}}>Totals</button>
-            <button onClick={() => {setShowSavings(true); setActiveButtonSavings(1)}}>Savings</button>
+            <button onClick={data.button1Function}>{data.buttonTabLeft}</button>
+            <button onClick={data.button2Function}>{data.buttonTabRight}</button>
             </div>
             <div style={style}>
                 {children}

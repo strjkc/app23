@@ -23,6 +23,8 @@ const strings = {
     typeOption2: "Trosak",
     folderTab1: "Unosi",
     folderTab2: "Godisnje",
+    folderButton3: "Mesecni Prikaz",
+    folderButton4: "Stednja",
     projectionTitle: "Godisnji prikaz:",
     months: ["Januar:", "Februar:", "Mart:", "April:", "Maj:", "Jun:", "Jul:", "Avgust:", "Septembar:", "Oktobar:", 'Novembar:', "Decembar:"],
     placeholderName: "Plata",

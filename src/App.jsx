@@ -19,7 +19,7 @@ function App() {
   const [expenses, setExpenses] = useState([])
   const [monthTotals, setMonthTotals] = useState([])
   const [monthlyExpenses, setMonthlyExpenses] = useState([])
-  const [selectedMonth, setSelectedMonth] = useState(null)
+  const [selectedMonth, setSelectedMonth] = useState("0001-01")
   const [totals, setTotals] = useState([])
   const [showSavings, setShowSavings] = useState(false)
   const [showTotals, setShowTotals] = useState(false)
@@ -27,7 +27,7 @@ function App() {
   const [activeButton, setActiveButton] = useState(0)
   const [activeButtonSavings, setActiveButtonSavings] = useState(0)
   const [width, height] = useWindowSize()
-  const [savings, setSavings] = useState(null)
+  const [savings, setSavings] = useState({})
 
 
   const getCurDateFormated = () => {
@@ -127,9 +127,11 @@ const mainDatePickerData = {
 */
 
 const folderLeft = {
-  setActiveButton: setActiveButtonSavings,
-  setShowTab:setShowSavings,
-  currentActive: activeButtonSavings
+  button1Function: () => {setShowSavings(false); setActiveButtonSavings(0)},
+  button2Function: () => {setShowSavings(true); setActiveButtonSavings(1)},
+  buttonTabLeft: strings.folderButton3,
+  buttonTabRight: strings.folderButton4,
+  activeButton: activeButton
 }
 
 const folderRight = {
@@ -140,6 +142,17 @@ const folderRight = {
   activeButton: activeButton
 }
 
+const savingsInputTotal = {
+  state: savings.totalSaved, setState: setSavings, fieldLabel: "Saved percent",
+   placeholderText: "Saved percent", componentId: "savings-total"
+}
+
+const savingsInputToSave = {
+  state: savings.percentToSave, setState: setSavings, fieldLabel: "Saved percent",
+   placeholderText: "Saved percent", componentId: "savings-percent"
+}
+
+//fieldLabel, state, setState, placeholderText, componentId
 
 
   return (
@@ -148,8 +161,8 @@ const folderRight = {
         {showSavings ?
           <FolderView data={folderLeft}>
             <Expense expenseName={"Savings for current month:"} value={savings.currentSaving}/>
-            <InputField placeholderText="Total saved" inputName="Total saved" state={savings.totalSaved} setState={setSavings}/>
-            <InputField placeholderText="Saved percent" inputName="Saved percent" state={savings.percentToSave} setState={setSavings}/>
+            <InputField data={savingsInputTotal}/>
+            <InputField data={savingsInputToSave}/>
           </FolderView>
           :
           <FolderView data={folderLeft}>               
@@ -159,17 +172,14 @@ const folderRight = {
           </FolderView>
           }
 
-          <WrapperPannel item={
+          <WrapperPannel>
             <ExpenseEntry changeExpenses={postNewEntry} financialEntry={null}/>
-          }
-          flexDirection={"column"}
-          />
-          <WrapperPannel item={
-              <ExpensesList expenses={monthlyExpenses} putEntry={putExistingEntry} listTitle={strings.expenseList} editable={false} />
-          }
-          flexDirection={"column"}
-           />
+          </WrapperPannel>
+          <WrapperPannel>
+            <ExpensesList expenses={monthlyExpenses} putEntry={putExistingEntry} listTitle={strings.expenseList} editable={false}/>
+          </WrapperPannel>
       </div>
+
       <div className={"right_pannel"}>
         
         { 
