@@ -2,40 +2,21 @@ import axios from "axios"
 import {urlExpenses, urlTotals, urlSavings} from '../Config/config'
 
 const dataFilter = async (callback) => {
-    const promise = await callback()()
+    const promise = await callback()
     return promise.data
 }
 
-/*
-export  const postNewEntry =  (newEntry) => {
-dataFilter( () => axios.post(urlExpenses, newEntry))
-}
+  const postNewEntry = async (newEntry) => {
+  return await dataFilter(async () => await axios.post(urlExpenses, newEntry))
+  }
 
-export  const putExistingEntry = async (changedEntry) => {
+  const putExistingEntry = async (changedEntry) => {
     const putUrl = `${urlExpenses}/${changedEntry.id}`
-    dataFilter(() => await axios.put(putUrl, changedEntry))
-    
+    return await dataFilter(async () => await axios.post(putUrl, changedEntry))
   }
 
-
-
-*/
-//######################
-
-export  const postNewEntry = async (newEntry) => {
-  const promise = await axios.post(urlExpenses, newEntry)
-  return promise.data
-  }
-
-export  const putExistingEntry = async (changedEntry) => {
-    const putUrl = `${urlExpenses}/${changedEntry.id}`
-    const promise = await axios.put(putUrl, changedEntry)
-    return promise.data
-  }
-
-export  const removeExistingEntry = async (id) => {
-    const promise = await axios.delete(`${urlExpenses}/${id}`)
-    return promise.data
+  const removeExistingEntry = async (id) => {
+  return await dataFilter(async () => await axios.delete(`${urlExpenses}/${id}`))
   }
   
   const getSaveings = async () => {
@@ -43,22 +24,19 @@ export  const removeExistingEntry = async (id) => {
     return promise.data
   }
   const getExpenses = async () => {
-    const promise = await axios.get(urlExpenses)
-    return promise.data
+    return await dataFilter(async () => await axios.get(urlExpenses))
   }
 
   const getCurrTotals = async (currMonth) => {
-    const promise = await axios.get(`${urlTotals}/${currMonth}`)
-    return promise.data 
+    return await dataFilter(async () => await axios.get(`${urlTotals}/${currMonth}`))
   }
   const getCurrExpenses = async (currMonth) => {
-    const promise = await axios.get(`${urlExpenses}/${currMonth}`)
-    return promise.data 
+    return await dataFilter(async () => await axios.get(`${urlExpenses}/${currMonth}`))
   }
     
   const getTotals = async () => {
-    const promise = await axios.get(urlTotals)
-    return promise.data 
+    return await dataFilter(async () => await axios.get(urlTotals))
+
   }
 
 

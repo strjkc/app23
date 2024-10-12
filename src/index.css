@@ -47,6 +47,6 @@ table {
 	border-spacing: 0;
 }
 html, body{
-	height: fit-content;
+	height: 100%;
 }
 @import-normalize;

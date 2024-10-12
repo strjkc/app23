@@ -1,3 +1,4 @@
-.expense_wrapper{
+.expense-wrapper{
     display: flex;
+    padding: 4px;
 }

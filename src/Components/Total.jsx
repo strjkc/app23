@@ -1,17 +1,11 @@
 import strings from "../Localization/Strings"
 import Expense from "./Expense"
-
-const totalStyle= {
-    display: "flex",
-    flexDirection: "column",
-    padding: "8px"
-}
+import "../CSS/Total.css"
 
 
-const Total = ({total, title}) => {
+const Total = ({total}) => {
   return (
-    <div style={totalStyle}>
-        <div style={{fontSize: "20px", fontWeight: "bold"}}>{title}</div>
+    <div className="totals-wrapper">
         <Expense expenseName = {strings.income} value = {total.income}/>
         <Expense expenseName = {strings.expenses} value = {total.expenses}/>
         <Expense expenseName ={strings.available} value = {total.available}/>

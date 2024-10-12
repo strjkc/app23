@@ -3,9 +3,7 @@ import ExpensesList from './Components/ExpensesList'
 import "./App.css"
 import strings from './Localization/Strings'
 import ExpenseEntry from './Components/ExpenseEntry'
-import {useEffect, useState} from 'react'
-import axios from 'axios'
-import {urlExpenses, urlTotals, urlSavings} from './Config/config'
+import {createContext, useEffect, useState} from 'react'
 import Total from './Components/Total'
 import EntryDatePicker from './Components/EntryDatePicker'
 import WrapperPannel from './Components/WrapperPannel'
@@ -13,54 +11,60 @@ import FolderView from './Components/FolderView'
 import { useWindowSize } from './Helper/Hooks'
 import InputField from './Components/InputField'
 import transactions from './Services/transactions'
+import {getCurrentDates} from "./Helper/helpers"
+import Modal from './Components/Modal'
+
+
+export const FormContext = createContext()
 
 function App() {
   
-  const [expenses, setExpenses] = useState([])
+  const [expensesList, setExpensesList] = useState([])
   const [monthTotals, setMonthTotals] = useState([])
   const [monthlyExpenses, setMonthlyExpenses] = useState([])
-  const [selectedMonth, setSelectedMonth] = useState("0001-01")
+  const [selectedMonth, setSelectedMonth] = useState("")
   const [totals, setTotals] = useState([])
   const [showSavings, setShowSavings] = useState(false)
   const [showTotals, setShowTotals] = useState(false)
-  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", 'November', "December"]
   const [activeButton, setActiveButton] = useState(0)
   const [activeButtonSavings, setActiveButtonSavings] = useState(0)
   const [width, height] = useWindowSize()
   const [savings, setSavings] = useState({})
+  const [displayForm, setDisplayForm] = useState(false)
+  const [form, setForm] = useState(null)
 
 
-  const getCurDateFormated = () => {
-    const curYear = new Date().getFullYear()
-    const curMon = new Date().getMonth() + 1
-    const formatedMon = curMon / 10 < 1 ? `0${curMon}` : String(curMon)
-    const formatedDate = `${curYear}-${formatedMon}`
-    setSelectedMonth(formatedDate)
-  }
 
   useEffect(() => {
     (async function () {
-    const data = await transactions.getSavings()
-    const expensesData = await transactions.getExpenses()
+      const [savingsData, expensesData] = await Promise.all([
+        transactions.getSavings(),
+        transactions.getExpenses()
+      ])
+
+      
+
     const saving = {
-      currentSaving: Math.ceil(data[0].currentSaving),
-      totalSaved: Math.ceil(data[0].totalSaved),
-      percentToSave: data[0].percentToSave
+      currentSaving: Math.ceil(savingsData[0].currentSaving),
+      totalSaved: Math.ceil(savingsData[0].totalSaved),
+      percentToSave: savingsData[0].percentToSave
     }
     setSavings(saving)
-    setExpenses(expensesData)
-    getCurDateFormated()
+    setExpensesList(expensesData)
+    setSelectedMonth(getCurrentDates())
   })()
   },[])
 
 
   useEffect( () => {
     (async function () {
-    const currMonth = new Date(selectedMonth).getMonth() || new Date().getMonth()    
-    const data =  await transactions.getCurrTotals(currMonth) 
-    setMonthTotals(data)
-    const dataExp =  await transactions.getCurrExpenses(currMonth)
-    setMonthlyExpenses(dataExp)
+    const currMonth = new Date(selectedMonth).getMonth() || new Date().getMonth()
+    const [totalsData, expensesData] = await Promise.all([
+      transactions.getCurrTotals(currMonth), 
+      transactions.getCurrExpenses(currMonth)
+    ])    
+    setMonthTotals(totalsData)
+    setMonthlyExpenses(expensesData)
     })()
   },[selectedMonth])
 
@@ -69,62 +73,39 @@ function App() {
     const data =  await transactions.getTotals()
     setTotals(data)
     })()
-  }, [expenses])
+  }, [expensesList])
 
 
-  const listOfExpenses = expenses.filter(expense => Boolean(expense.isExpense))
-  const listOfIncomes = expenses.filter(expense => Boolean(!expense.isExpense))
+  const listOfExpenses = expensesList.filter(expense => Boolean(expense.isExpense))
+  const listOfIncomes = expensesList.filter(expense => Boolean(!expense.isExpense))
   
 
   const postNewEntry = async (newEntry) => {
     const data = await transactions.postNewEntry(newEntry)
-    const newList = expenses.concat(response.data)
-    setExpenses(newList)
+    const newList = expensesList.concat(data)
+    setExpensesList(newList)
   }
 
   const putExistingEntry = async (changedEntry) => {
-    //const putUrl = `${urlExpenses}/${changedEntry.id}`
     const data = await transactions.putExistingEntry(changedEntry)
-    const newExpenseList = expenses.map(expense => expense.id !== response.data.id ? expense : response.data)
-    setExpenses(newExpenseList)
-    resetState(data)
+    const newExpenseList = expensesList.map(expense => expense.id !== data.id ? expense : data)
+    setExpensesList(newExpenseList)
   }
 
   const removeExistingEntry = async (id) => {
     await transactions.removeExistingEntry(id)
-    //axios.delete(`${urlExpenses}/${id}`)
-    const newExpenses = expenses.filter(expense => expense.id !== id)
-    setExpenses(newExpenses)
+    const newExpenses = expensesList.filter(expense => expense.id !== id)
+    setExpensesList(newExpenses)
   } 
 
   const monthProjection = totals.map((total, index) => <><Total total={total} title={strings.months[index]}/></>)
 
-
-
-/*
-    treba napraviti poseban objekat za savings, trebalo bi refaktorisati total objekat tako da prima array neki i izlistava ga da bi mogao da ga koristim i za totals i za savings
-    server treba srediti da salje samo objekat ne array sa jednim objektom
-    prevode uraditi za tabove nove
-     
-*/
-
 const mainDatePickerData = {
-  //this should allways be enabled - true
   isEnabled: true,
   state: selectedMonth,
   setState: setSelectedMonth,
   name: strings.selectedMonth
 }
-
-/*
-          buttons={[   <button style={{width: "100%", height: "100%", border: "none", borderRadius: "inherit", backgroundColor: "inherit"}} onClick={() => {setShowSavings(false); setActiveButtonSavings(0)}}>Totals</button>,
-          <button style={{width: "100%", height: "100%", border: "none", borderRadius: "inherit", backgroundColor: "inherit"}} onClick={() => {setShowSavings(true); setActiveButtonSavings(1)}}>Savings</button>]} 
-          activeButton={activeButtonSavings}
-          >
-
-
-
-*/
 
 const folderLeft = {
   button1Function: () => {setShowSavings(false); setActiveButtonSavings(0)},
@@ -157,48 +138,43 @@ const savingsInputToSave = {
 
   return (
     <div className="App">
-      <div className={"left_pannel"}>
-        {showSavings ?
-          <FolderView data={folderLeft}>
+        <div style={{display: 'inline-block'}}>
+        <button onClick={() => setDisplayForm(!displayForm)}>New Entry</button>
+            {displayForm ?
+            <Modal closeModal={() => {setDisplayForm(!displayForm); setForm(null)}}> 
+              <ExpenseEntry  changeExpenses={postNewEntry} financialEntry={form}/> 
+            </Modal>: <></>
+            }
+        </div>
+
+          
+        <div style={{display: 'flex', flexDirection:"row", justifyContent: 'space-around'}}>
+          <WrapperPannel>
             <Expense expenseName={"Savings for current month:"} value={savings.currentSaving}/>
             <InputField data={savingsInputTotal}/>
             <InputField data={savingsInputToSave}/>
-          </FolderView>
-          :
-          <FolderView data={folderLeft}>               
-            <div style={{fontSize: "25px", height: "50px", padding: "8px", color: "black"}}>{strings.currenthMonthTotals}</div>
+          </WrapperPannel>
+          <WrapperPannel>
+            <h3 style={{fontSize: "25px", height: "50px", padding: "8px", color: "black"}}>{strings.currenthMonthTotals}</h3>
             <EntryDatePicker data={mainDatePickerData}/> 
             <Total total={monthTotals}/>            
-          </FolderView>
-          }
-
-          <WrapperPannel>
-            <ExpenseEntry changeExpenses={postNewEntry} financialEntry={null}/>
           </WrapperPannel>
-          <WrapperPannel>
-            <ExpensesList expenses={monthlyExpenses} putEntry={putExistingEntry} listTitle={strings.expenseList} editable={false}/>
-          </WrapperPannel>
-      </div>
 
-      <div className={"right_pannel"}>
-        
-        { 
-        showTotals ?
-        <FolderView data={folderRight}>
+
+        <WrapperPannel>
           <><div style={{fontSize: "25px", height: "50px", lineHeight: "50px", padding: "8px", color: "black"}}>{strings.projectionTitle}</div>
           <div>{monthProjection}</div></>
-        </FolderView>
-
-        :
-        <FolderView data={folderRight}>
-          <div style={{display: "flex", flexDirection: width <= 500 ? "column" : "row"}}>
-            <ExpensesList expenses={listOfExpenses} removeItem={removeExistingEntry} putEntry={putExistingEntry} listTitle={strings.expenseList} editable={true}/>
-            <ExpensesList expenses={listOfIncomes} removeItem={removeExistingEntry} putEntry={putExistingEntry} listTitle={strings.incomeList} editable={true}/>
+        </WrapperPannel>
+        <WrapperPannel>
+          <div  onClick={() => console.log("capture")} style={{display: "flex", flexDirection: width <= 500 ? "column" : "row"}}>
+            <FormContext.Provider value={{displayForm, setDisplayForm, setForm}}>
+              <ExpensesList expenses={listOfExpenses} removeItem={removeExistingEntry} putEntry={putExistingEntry} listTitle={strings.expenseList} editable={true}/>
+              <ExpensesList expenses={listOfIncomes} removeItem={removeExistingEntry} putEntry={putExistingEntry} listTitle={strings.incomeList} editable={true}/>
+            </FormContext.Provider>
           </div>
-        </FolderView>
-            }
+        </WrapperPannel>
+        </div>
       </div>
-    </div>
     
   );
 }

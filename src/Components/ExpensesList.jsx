@@ -2,11 +2,6 @@ import ExpenseListItem from "./ExpenseListItem"
 import "../CSS/ExpensesList.css"
 import { useWindowSize } from "../Helper/Hooks"
 
-
-
-
-
-
 const ExpensesList = ({expenses, removeItem, listTitle, putEntry, editable}) => {
     //expense should be a list of objects with expenseName and value properties
 
